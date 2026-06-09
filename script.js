@@ -22,20 +22,71 @@ const revealObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-/* ============ LEADERBOARD: count-up + bars when in view ============ */
+/* ============ LEADERBOARD — live scores from Firebase ============ */
+const HOUSES_DB = 'https://eddies-grit-hub-default-rtdb.firebaseio.com/houses.json';
+const DEFAULT_HOUSES = {
+  haydon: 568, mulrooney: 537, treacy: 530, obrien: 509, rice: 449, clancy: 365
+};
+let maxScore = MAX_POINTS;
+
 function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+function ordinal(n) {
+  const s = ['th', 'st', 'nd', 'rd'];
+  const v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+
+async function getHouses() {
+  try {
+    const res = await fetch(HOUSES_DB);
+    let data = await res.json();
+    if (!data) {
+      // Seed the database once so the scores are editable in the console
+      await fetch(HOUSES_DB, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(DEFAULT_HOUSES)
+      });
+      data = DEFAULT_HOUSES;
+    }
+    return data;
+  } catch (e) {
+    return DEFAULT_HOUSES;
+  }
+}
+
+function applyHouses(data) {
+  const houses = Array.from(document.querySelectorAll('.house'));
+  houses.forEach(h => {
+    const key = h.dataset.house;
+    if (data[key] != null) h.dataset.points = data[key];
+  });
+
+  maxScore = Math.max(...houses.map(h => parseInt(h.dataset.points) || 0), 1);
+
+  // Sort highest → lowest, reorder in the DOM, and assign ranks
+  const lb = document.querySelector('.leaderboard');
+  houses
+    .slice()
+    .sort((a, b) => parseInt(b.dataset.points) - parseInt(a.dataset.points))
+    .forEach((h, idx) => {
+      lb.appendChild(h);
+      h.querySelector('.house-rank').textContent = ordinal(idx + 1);
+      h.querySelector('.bar-pts').textContent = h.dataset.points;
+    });
+}
 
 function runHouse(house, i) {
   const pts = parseInt(house.dataset.points);
   const bar = house.querySelector('.bar');
   const label = house.querySelector('.bar-pts');
-  const targetH = (pts / MAX_POINTS) * BAR_MAX_PX;
+  const targetH = (pts / maxScore) * BAR_MAX_PX;
 
   setTimeout(() => {
     bar.style.height = targetH + 'px';
     label.classList.add('visible');
 
-    // count-up number
     if (prefersReduced) { label.textContent = pts; return; }
     const dur = 1300;
     const start = performance.now();
@@ -49,24 +100,12 @@ function runHouse(house, i) {
   }, 150 + i * 110);
 }
 
-const leaderboard = document.querySelector('.leaderboard');
-const lbObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      document.querySelectorAll('.house').forEach((h, i) => runHouse(h, i));
-      lbObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.3 });
-lbObserver.observe(leaderboard);
-
-// Hover: collapse and re-erect bar
+// Hover: collapse and re-erect bar (reads live values at event time)
 document.querySelectorAll('.house').forEach(house => {
-  const pts = parseInt(house.dataset.points);
   const bar = house.querySelector('.bar');
-  const targetH = (pts / MAX_POINTS) * BAR_MAX_PX;
   house.addEventListener('mouseenter', () => {
     if (prefersReduced || !bar.style.height) return;
+    const targetH = (parseInt(house.dataset.points) / maxScore) * BAR_MAX_PX;
     bar.style.transition = 'height .3s ease, filter .3s ease';
     bar.style.height = '0px';
     setTimeout(() => {
@@ -75,6 +114,21 @@ document.querySelectorAll('.house').forEach(house => {
     }, 300);
   });
 });
+
+// Load scores, then reveal/animate when the leaderboard scrolls into view
+(async function initLeaderboard() {
+  const data = await getHouses();
+  applyHouses(data);
+  const lbObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        document.querySelectorAll('.house').forEach((h, i) => runHouse(h, i));
+        lbObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  lbObserver.observe(document.querySelector('.leaderboard'));
+})();
 
 /* ============ MAGNETIC BUTTONS ============ */
 if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !prefersReduced) {
@@ -204,7 +258,7 @@ if (localStorage.getItem('poll_pingpong_voted')) {
 }
 
 /* ============ FEEDBACK FORM (FormSubmit) ============ */
-const FEEDBACK_ENDPOINT = 'https://formsubmit.co/ajax/hjayh08@gmail.com';
+const FEEDBACK_ENDPOINT = 'https://formsubmit.co/ajax/cde44a1827c97c277a4bb0f0875f80bc';
 const feedbackForm = document.getElementById('feedback-form');
 const feedbackStatus = document.getElementById('feedback-status');
 
