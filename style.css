@@ -38,6 +38,19 @@ body {
   background: radial-gradient(ellipse at 50% 60%, rgba(244,196,0,.08) 0%, transparent 70%);
 }
 .hero-inner { position: relative; }
+.hero-logo-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.hero-logo {
+  height: 80px;
+  width: auto;
+  filter: drop-shadow(0 2px 12px rgba(0,0,0,.4));
+  animation: fadeDown .8s ease both;
+}
 .hero-title {
   font-size: clamp(2.4rem, 7vw, 5rem);
   font-weight: 900;
