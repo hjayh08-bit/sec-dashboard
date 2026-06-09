@@ -24,6 +24,39 @@
     </div>
   </section>
 
+  <!-- POLL -->
+  <section class="poll-section">
+    <div class="poll-inner">
+      <div class="poll-tag">Student Vote</div>
+      <h2 class="poll-question">Should there be permanent ping pong tables in the quad?</h2>
+      <div class="poll-buttons" id="poll-buttons">
+        <button class="poll-btn yes" data-vote="yes" onclick="castVote('yes')">
+          <span class="poll-emoji">🏓</span> Yes
+        </button>
+        <button class="poll-btn no" data-vote="no" onclick="castVote('no')">
+          <span class="poll-emoji">❌</span> No
+        </button>
+      </div>
+      <div class="poll-results" id="poll-results" style="display:none">
+        <div class="poll-bar-wrap">
+          <div class="poll-bar-label">Yes</div>
+          <div class="poll-bar-track">
+            <div class="poll-bar yes-bar" id="yes-bar"></div>
+          </div>
+          <div class="poll-bar-pct" id="yes-pct">0%</div>
+        </div>
+        <div class="poll-bar-wrap">
+          <div class="poll-bar-label">No</div>
+          <div class="poll-bar-track">
+            <div class="poll-bar no-bar" id="no-bar"></div>
+          </div>
+          <div class="poll-bar-pct" id="no-pct">0%</div>
+        </div>
+        <p class="poll-voted-msg">Your vote has been counted. Results update live.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- STUDY TIPS -->
   <section class="tips-banner" id="tips">
     <div class="tips-inner">

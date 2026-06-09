@@ -97,3 +97,36 @@ carousel.addEventListener('mouseup', e => {
 carousel.addEventListener('mouseleave', () => { dragging = false; });
 
 animateBars();
+
+// POLL
+function castVote(choice) {
+  const stored = JSON.parse(localStorage.getItem('poll_pingpong') || '{"yes":0,"no":0}');
+  const voted = localStorage.getItem('poll_pingpong_voted');
+  if (voted) { showResults(stored); return; }
+  stored[choice]++;
+  localStorage.setItem('poll_pingpong', JSON.stringify(stored));
+  localStorage.setItem('poll_pingpong_voted', choice);
+  showResults(stored);
+}
+
+function showResults(data) {
+  const total = data.yes + data.no || 1;
+  const yesPct = Math.round(data.yes / total * 100);
+  const noPct = 100 - yesPct;
+  document.getElementById('poll-buttons').style.display = 'none';
+  const results = document.getElementById('poll-results');
+  results.style.display = 'block';
+  setTimeout(() => {
+    document.getElementById('yes-bar').style.width = yesPct + '%';
+    document.getElementById('no-bar').style.width  = noPct  + '%';
+    document.getElementById('yes-pct').textContent = yesPct + '%';
+    document.getElementById('no-pct').textContent  = noPct  + '%';
+  }, 50);
+}
+
+// Show results straight away if already voted
+const existingVote = localStorage.getItem('poll_pingpong_voted');
+if (existingVote) {
+  const stored = JSON.parse(localStorage.getItem('poll_pingpong') || '{"yes":0,"no":0}');
+  showResults(stored);
+}
