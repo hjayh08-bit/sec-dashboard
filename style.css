@@ -78,9 +78,10 @@ body {
 .nav-links a:hover { color: #fff; }
 .nav-links a:hover::after { width: 100%; }
 @media (max-width: 600px) {
-  .nav-links { gap: 16px; }
-  .nav-links a { font-size: .82rem; }
-  .nav-brand span { display: none; }
+  .nav { justify-content: center; }
+  .nav-brand { display: none; }
+  .nav-links { gap: 20px; }
+  .nav-links a { font-size: .92rem; }
 }
 
 /* ============ HERO ============ */
@@ -191,7 +192,6 @@ body {
   box-shadow: 0 14px 40px rgba(244,196,0,.45);
 }
 @media (max-width: 480px) {
-  .hero-logo { height: 54px; }
   .hero { min-height: 88vh; }
 }
 @keyframes heroPop {
@@ -586,15 +586,16 @@ footer {
   .feedback-section, .about { padding-left: 18px; padding-right: 18px; }
   .welcome { padding-top: 60px; padding-bottom: 60px; }
   .poll-section, .tips-banner, .section, .feedback-section { padding-top: 64px; padding-bottom: 64px; }
-  .hero-logo-wrap { gap: 14px; }
+  .hero-logo-wrap { flex-direction: column; gap: 20px; }
+  .hero-logo { height: 108px; }
   .poll-buttons { flex-direction: column; gap: 12px; }
   .poll-btn { width: 100%; padding: 22px 24px; }
   .tips-carousel { padding: 28px 22px; }
   .tip { gap: 18px !important; }
   .tip-num { font-size: 2.6rem; }
-  .leaderboard { gap: 10px; }
-  .house { min-width: 90px; max-width: 110px; }
-  .bar-track { width: 56px; }
+  .leaderboard { gap: 22px 10px; }
+  .house { min-width: 90px; max-width: 110px; padding-top: 44px; }
+  .bar-track { width: 56px; height: 190px; }
   .crest-wrap { width: 92px; }
   .house-name { font-size: .78rem; }
   .section-title { margin-bottom: 40px; }

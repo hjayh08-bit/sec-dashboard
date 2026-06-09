@@ -1,5 +1,5 @@
 const MAX_POINTS = 600;
-const BAR_MAX_PX = 280;
+const BAR_MAX_PX = window.matchMedia('(max-width: 600px)').matches ? 180 : 280;
 const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ============ NAV: condense on scroll ============ */
