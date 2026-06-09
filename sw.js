@@ -1,4 +1,4 @@
-const CACHE = 'eddies-grit-hub-v1';
+const CACHE = 'eddies-grit-hub-v2';
 const ASSETS = [
   '/eddies-grit-hub/',
   '/eddies-grit-hub/index.html',

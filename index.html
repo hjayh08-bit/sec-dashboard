@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Eddies Grit Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#f4c400" />
@@ -14,35 +17,55 @@
 </head>
 <body>
 
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <a href="#top" class="nav-brand">
+      <img src="eddiesLogoWhite.png" alt="" class="nav-logo" />
+      <span>Grit Hub</span>
+    </a>
+    <div class="nav-links">
+      <a href="#vote">Vote</a>
+      <a href="#tips">Tips</a>
+      <a href="#leaderboard">Houses</a>
+      <a href="#feedback">Feedback</a>
+    </div>
+  </nav>
+
   <!-- HEADER -->
-  <header class="hero">
+  <header class="hero" id="top">
+    <div class="hero-bg" aria-hidden="true">
+      <span class="blob blob-1"></span>
+      <span class="blob blob-2"></span>
+      <span class="blob blob-3"></span>
+    </div>
     <div class="hero-inner">
       <div class="hero-logo-wrap">
         <img src="eddiesLogoWhite.png" alt="St Edmund's College Logo" class="hero-logo" />
         <h1 class="hero-title">Eddies Grit Hub</h1>
       </div>
       <p class="hero-sub">St Edmund's College — Student Info Board</p>
+      <a href="#vote" class="hero-cta">Have your say ↓</a>
     </div>
   </header>
 
   <!-- WELCOME -->
   <section class="welcome">
-    <div class="welcome-inner">
+    <div class="welcome-inner reveal">
       <h2>Welcome to Eddies Grit Hub</h2>
       <p>Built by students, for students — Eddies Grit Hub is your space to stay connected, get involved, and help shape life at St Edmund's. Vote on real issues around the college, track live house points, and pick up weekly study tips. This is just the start — the more students use it, the more it grows. The goal is simple: build something that actually means something to the boys at Eddies.</p>
     </div>
   </section>
 
   <!-- POLL -->
-  <section class="poll-section">
-    <div class="poll-inner">
+  <section class="poll-section" id="vote">
+    <div class="poll-inner reveal">
       <div class="poll-tag">Student Vote</div>
       <h2 class="poll-question">Should there be permanent ping pong tables in the quad?</h2>
       <div class="poll-buttons" id="poll-buttons">
-        <button class="poll-btn yes" data-vote="yes" onclick="castVote('yes')">
+        <button class="poll-btn yes magnetic" data-vote="yes" onclick="castVote('yes')">
           <span class="poll-emoji">🏓</span> Yes
         </button>
-        <button class="poll-btn no" data-vote="no" onclick="castVote('no')">
+        <button class="poll-btn no magnetic" data-vote="no" onclick="castVote('no')">
           <span class="poll-emoji">❌</span> No
         </button>
       </div>
@@ -70,7 +93,7 @@
 
   <!-- STUDY TIPS -->
   <section class="tips-banner" id="tips">
-    <div class="tips-inner">
+    <div class="tips-inner reveal">
       <div class="tips-label">Weekly Study Tip</div>
       <div class="tips-carousel">
         <div class="tip active">
@@ -106,8 +129,8 @@
 
   <!-- LEADERBOARD -->
   <section class="section" id="leaderboard">
-    <h2 class="section-title">House Points</h2>
-    <div class="leaderboard">
+    <h2 class="section-title reveal">House Points</h2>
+    <div class="leaderboard reveal">
 
       <div class="house" data-points="568" data-color="#e63946">
         <div class="bar-track">
@@ -186,7 +209,24 @@
 
   <!-- ABOUT -->
   <section class="about">
-    <p>The House System promotes a sense of belonging and pride in our students, fostering connection to the St Edmund's College community. Students earn points through sporting events, academic challenges, and pastoral activities.</p>
+    <p class="reveal">The House System promotes a sense of belonging and pride in our students, fostering connection to the St Edmund's College community. Students earn points through sporting events, academic challenges, and pastoral activities.</p>
+  </section>
+
+  <!-- FEEDBACK -->
+  <section class="feedback-section" id="feedback">
+    <div class="feedback-inner reveal">
+      <div class="poll-tag">Got an idea?</div>
+      <h2 class="feedback-title">Send us your feedback</h2>
+      <p class="feedback-sub">Spotted something, got a suggestion, or want a new poll? Drop us a message — it goes straight to the student team.</p>
+
+      <form class="feedback-form" id="feedback-form">
+        <input type="text" name="name" placeholder="Your name" required />
+        <textarea name="message" placeholder="Your message…" rows="4" required></textarea>
+        <input type="hidden" name="_subject" value="New Eddies Grit Hub feedback" />
+        <button type="submit" class="feedback-btn magnetic">Send feedback →</button>
+      </form>
+      <p class="feedback-status" id="feedback-status"></p>
+    </div>
   </section>
 
   <footer>
