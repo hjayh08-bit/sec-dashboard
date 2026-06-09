@@ -189,6 +189,12 @@ body {
   color: #fff;
   text-align: right;
 }
+.poll-total {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-top: 20px;
+}
 .poll-voted-msg {
   font-size: .85rem;
   color: var(--muted);

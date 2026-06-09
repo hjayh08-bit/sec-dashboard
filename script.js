@@ -136,16 +136,19 @@ async function removeVote() {
 }
 
 function showResults(data) {
-  const total = (data.yes || 0) + (data.no || 0) || 1;
-  const yesPct = Math.round((data.yes || 0) / total * 100);
-  const noPct = 100 - yesPct;
+  const yes = data.yes || 0;
+  const no  = data.no  || 0;
+  const total = yes + no || 1;
+  const yesPct = Math.round(yes / total * 100);
+  const noPct  = 100 - yesPct;
   document.getElementById('poll-buttons').style.display = 'none';
   document.getElementById('poll-results').style.display = 'block';
+  document.getElementById('poll-total').textContent = `${yes + no} ${yes + no === 1 ? 'person has' : 'people have'} voted`;
   setTimeout(() => {
     document.getElementById('yes-bar').style.width = yesPct + '%';
     document.getElementById('no-bar').style.width  = noPct  + '%';
-    document.getElementById('yes-pct').textContent = yesPct + '%';
-    document.getElementById('no-pct').textContent  = noPct  + '%';
+    document.getElementById('yes-pct').textContent = `${yesPct}% (${yes})`;
+    document.getElementById('no-pct').textContent  = `${noPct}% (${no})`;
   }, 50);
 }
 
