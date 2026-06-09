@@ -200,7 +200,7 @@ carousel.addEventListener('mouseleave', () => { dragging = false; });
 
 /* ============ PWA SERVICE WORKER ============ */
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/eddies-grit-hub/sw.js');
+  navigator.serviceWorker.register('/sw.js');
 }
 
 /* ============ POLL — Firebase backend ============ */

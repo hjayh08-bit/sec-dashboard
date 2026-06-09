@@ -2,7 +2,7 @@
   "name": "Eddies Grit Hub",
   "short_name": "Grit Hub",
   "description": "St Edmund's College student dashboard — house points, polls, and study tips.",
-  "start_url": "/eddies-grit-hub/",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#0b0e1a",
   "theme_color": "#f4c400",

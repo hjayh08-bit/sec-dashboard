@@ -1,17 +1,17 @@
-const CACHE = 'eddies-grit-hub-v2';
+const CACHE = 'eddies-grit-hub-v3';
 const ASSETS = [
-  '/eddies-grit-hub/',
-  '/eddies-grit-hub/index.html',
-  '/eddies-grit-hub/style.css',
-  '/eddies-grit-hub/script.js',
-  '/eddies-grit-hub/manifest.json',
-  '/eddies-grit-hub/eddiesLogoWhite.png',
-  '/eddies-grit-hub/house_h.png',
-  '/eddies-grit-hub/house_m.png',
-  '/eddies-grit-hub/house_t.png',
-  '/eddies-grit-hub/house_o.png',
-  '/eddies-grit-hub/house_r.png',
-  '/eddies-grit-hub/house_c.png'
+  '/',
+  '/index.html',
+  '/style.css',
+  '/script.js',
+  '/manifest.json',
+  '/eddiesLogoWhite.png',
+  '/house_h.png',
+  '/house_m.png',
+  '/house_t.png',
+  '/house_o.png',
+  '/house_r.png',
+  '/house_c.png'
 ];
 
 self.addEventListener('install', e => {
