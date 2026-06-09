@@ -1,33 +1,35 @@
-// Animate bars on load
 const MAX_POINTS = 600;
-const BAR_MAX_HEIGHT = 240; // px
+const BAR_MAX_PX = 280;
 
 function animateBars() {
-  document.querySelectorAll('.bar-group').forEach((g, i) => {
-    const pts = parseInt(g.dataset.points);
-    const color = g.dataset.color;
-    const fill = g.querySelector('.bar-fill');
-    fill.style.setProperty('--c', color);
-    fill.style.background = color;
+  document.querySelectorAll('.house').forEach((house, i) => {
+    const pts = parseInt(house.dataset.points);
+    const bar = house.querySelector('.bar');
+    const label = house.querySelector('.bar-pts');
+    const targetH = (pts / MAX_POINTS) * BAR_MAX_PX;
+
     setTimeout(() => {
-      fill.style.height = (pts / MAX_POINTS * BAR_MAX_HEIGHT) + 'px';
-    }, 200 + i * 100);
+      bar.style.height = targetH + 'px';
+      label.classList.add('visible');
+    }, 200 + i * 120);
   });
 }
 
-// Animate cards when they scroll into view
-function animateCards() {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, idx) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), idx * 80);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
+// Hover: collapse and re-erect bar
+document.querySelectorAll('.house').forEach(house => {
+  const pts = parseInt(house.dataset.points);
+  const bar = house.querySelector('.bar');
+  const targetH = (pts / MAX_POINTS) * BAR_MAX_PX;
 
-  document.querySelectorAll('.card').forEach(c => observer.observe(c));
-}
+  house.addEventListener('mouseenter', () => {
+    bar.style.transition = 'height .3s ease, filter .3s ease';
+    bar.style.height = '0px';
+    setTimeout(() => {
+      bar.style.transition = 'height 1s cubic-bezier(.22,1,.36,1), filter .3s ease';
+      bar.style.height = targetH + 'px';
+    }, 320);
+  });
+});
 
 // Study tips carousel
 let currentTip = 0;
@@ -42,13 +44,8 @@ function showTip(i) {
   dots[currentTip].classList.add('active');
 }
 
-dots.forEach(dot => {
-  dot.addEventListener('click', () => showTip(parseInt(dot.dataset.i)));
-});
-
-// Auto-rotate tips every 6 seconds
+dots.forEach(dot => dot.addEventListener('click', () => showTip(parseInt(dot.dataset.i))));
 setInterval(() => showTip((currentTip + 1) % tips.length), 6000);
 
 // Init
 animateBars();
-animateCards();

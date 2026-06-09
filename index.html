@@ -3,371 +3,145 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>St Edmund's College — House Dashboard</title>
+  <title>Eddies Grit Hub</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- SVG DEFS: shared shield clip path -->
-  <svg width="0" height="0" style="position:absolute">
-    <defs>
-      <clipPath id="shield-clip" clipPathUnits="objectBoundingBox">
-        <path d="M0.083,0.071 H0.917 V0.643 Q0.5,0.971 0.083,0.643 Z"/>
-      </clipPath>
-    </defs>
-  </svg>
-
   <!-- HEADER -->
   <header class="hero">
     <div class="hero-inner">
-      <h1 class="hero-title">St Edmund's College</h1>
-      <p class="hero-sub">House Dashboard</p>
+      <h1 class="hero-title">Eddies Grit Hub</h1>
+      <p class="hero-sub">St Edmund's College — Student Info Board</p>
     </div>
   </header>
 
-  <!-- STUDY TIPS (top, prominent) -->
-  <section class="section tips-top" id="tips">
-    <h2 class="section-title">Weekly Study Tip</h2>
-    <div class="tips-carousel">
-      <div class="tip active">
-        <span class="tip-num">01</span>
-        <p>Break your study into 25-minute blocks with 5-minute breaks (Pomodoro). Your brain retains more when it gets regular rests.</p>
-      </div>
-      <div class="tip">
-        <span class="tip-num">02</span>
-        <p>Write summaries in your own words after each topic. If you can explain it simply, you actually understand it.</p>
-      </div>
-      <div class="tip">
-        <span class="tip-num">03</span>
-        <p>Test yourself with flashcards or past papers — retrieval practice beats re-reading every time.</p>
-      </div>
-      <div class="tip">
-        <span class="tip-num">04</span>
-        <p>Study the hardest subject first when your energy is highest, usually in the morning.</p>
-      </div>
-      <div class="tip">
-        <span class="tip-num">05</span>
-        <p>Put your phone in another room. Even having it face-down nearby reduces your ability to focus.</p>
-      </div>
+  <!-- WELCOME -->
+  <section class="welcome">
+    <div class="welcome-inner">
+      <h2>Welcome to Eddies Grit Hub</h2>
+      <p>Hey boys — this is your student-run info board for St Edmund's College. Here you'll find live house points, weekly study tips, and everything happening around the college. This is a space built by students, for students — check back regularly and make your voice heard by voting on things that matter to you.</p>
     </div>
-    <div class="tip-dots">
-      <button class="dot active" data-i="0"></button>
-      <button class="dot" data-i="1"></button>
-      <button class="dot" data-i="2"></button>
-      <button class="dot" data-i="3"></button>
-      <button class="dot" data-i="4"></button>
+  </section>
+
+  <!-- STUDY TIPS -->
+  <section class="tips-banner" id="tips">
+    <div class="tips-inner">
+      <div class="tips-label">Weekly Study Tip</div>
+      <div class="tips-carousel">
+        <div class="tip active">
+          <span class="tip-num">01</span>
+          <p>Break your study into 25-minute blocks with 5-minute breaks (Pomodoro). Your brain retains more when it gets regular rests.</p>
+        </div>
+        <div class="tip">
+          <span class="tip-num">02</span>
+          <p>Write summaries in your own words after each topic. If you can explain it simply, you actually understand it.</p>
+        </div>
+        <div class="tip">
+          <span class="tip-num">03</span>
+          <p>Test yourself with flashcards or past papers — retrieval practice beats re-reading every time.</p>
+        </div>
+        <div class="tip">
+          <span class="tip-num">04</span>
+          <p>Study the hardest subject first when your energy is highest, usually in the morning.</p>
+        </div>
+        <div class="tip">
+          <span class="tip-num">05</span>
+          <p>Put your phone in another room. Even having it face-down nearby reduces your ability to focus.</p>
+        </div>
+      </div>
+      <div class="tip-dots">
+        <button class="dot active" data-i="0"></button>
+        <button class="dot" data-i="1"></button>
+        <button class="dot" data-i="2"></button>
+        <button class="dot" data-i="3"></button>
+        <button class="dot" data-i="4"></button>
+      </div>
     </div>
   </section>
 
   <!-- LEADERBOARD -->
   <section class="section" id="leaderboard">
     <h2 class="section-title">House Points</h2>
-    <div class="bars-wrap">
+    <div class="leaderboard">
 
-      <!-- Haydon: red, horizontal white stripes -->
-      <div class="bar-group" data-house="Haydon" data-points="568" data-color="#e63946">
-        <div class="bar-crest">
-          <svg viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
-            <path d="M5,5 H55 V45 Q30,68 5,45 Z" fill="#e63946" stroke="#c0002a" stroke-width="1.5"/>
-            <rect x="5" y="13" width="50" height="5" fill="white"/>
-            <rect x="5" y="22" width="50" height="5" fill="white"/>
-            <rect x="5" y="31" width="50" height="5" fill="white"/>
-            <rect x="5" y="40" width="48" height="5" fill="white"/>
-          </svg>
+      <div class="house" data-points="568" data-color="#e63946">
+        <div class="bar-track">
+          <div class="bar" style="--color:#e63946"></div>
+          <div class="bar-pts">568</div>
         </div>
-        <div class="bar-fill"></div>
-        <div class="bar-label">
-          <span class="house-name">Haydon</span>
-          <span class="house-pts">568</span>
+        <div class="crest-wrap">
+          <img src="house_h.png" alt="Haydon crest" class="crest-img" />
         </div>
+        <div class="house-name">Haydon</div>
+        <div class="house-rank">1st</div>
       </div>
 
-      <!-- Mulrooney: light blue, white Greek cross, Celtic crosses in quarters -->
-      <div class="bar-group" data-house="Mulrooney" data-points="537" data-color="#48cae4">
-        <div class="bar-crest">
-          <svg viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
-            <path d="M5,5 H55 V45 Q30,68 5,45 Z" fill="#48cae4" stroke="#0096c7" stroke-width="1.5"/>
-            <rect x="27" y="5"  width="6" height="62" fill="white"/>
-            <rect x="5"  y="26" width="50" height="6" fill="white"/>
-            <!-- small crosses in each quarter -->
-            <text x="16" y="23" text-anchor="middle" font-size="10" fill="white">✛</text>
-            <text x="44" y="23" text-anchor="middle" font-size="10" fill="white">✛</text>
-            <text x="16" y="42" text-anchor="middle" font-size="10" fill="white">✛</text>
-            <text x="44" y="42" text-anchor="middle" font-size="10" fill="white">✛</text>
-          </svg>
+      <div class="house" data-points="537" data-color="#48cae4">
+        <div class="bar-track">
+          <div class="bar" style="--color:#48cae4"></div>
+          <div class="bar-pts">537</div>
         </div>
-        <div class="bar-fill"></div>
-        <div class="bar-label">
-          <span class="house-name">Mulrooney</span>
-          <span class="house-pts">537</span>
+        <div class="crest-wrap">
+          <img src="house_m.png" alt="Mulrooney crest" class="crest-img" />
         </div>
+        <div class="house-name">Mulrooney</div>
+        <div class="house-rank">2nd</div>
       </div>
 
-      <!-- Treacy: navy top with gold chevron, black lower half, white bird -->
-      <div class="bar-group" data-house="Treacy" data-points="530" data-color="#1d3a8a">
-        <div class="bar-crest">
-          <svg viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <clipPath id="c-treacy">
-                <path d="M5,5 H55 V45 Q30,68 5,45 Z"/>
-              </clipPath>
-            </defs>
-            <path d="M5,5 H55 V45 Q30,68 5,45 Z" fill="#1d3a8a" stroke="#f4c400" stroke-width="2"/>
-            <!-- gold chevron/battlements across upper third -->
-            <g clip-path="url(#c-treacy)">
-              <rect x="0" y="0" width="60" height="28" fill="#f4c400"/>
-              <!-- battlements: navy notches on gold -->
-              <rect x="5"  y="0" width="8" height="12" fill="#1d3a8a"/>
-              <rect x="18" y="0" width="8" height="12" fill="#1d3a8a"/>
-              <rect x="31" y="0" width="8" height="12" fill="#1d3a8a"/>
-              <rect x="44" y="0" width="8" height="12" fill="#1d3a8a"/>
-              <!-- black lower section -->
-              <rect x="0" y="28" width="60" height="42" fill="#111"/>
-            </g>
-            <!-- white bird -->
-            <text x="30" y="54" text-anchor="middle" font-size="20" fill="white">🕊</text>
-            <path d="M5,5 H55 V45 Q30,68 5,45 Z" fill="none" stroke="#f4c400" stroke-width="2"/>
-          </svg>
+      <div class="house" data-points="530" data-color="#1d3a8a">
+        <div class="bar-track">
+          <div class="bar" style="--color:#1d3a8a"></div>
+          <div class="bar-pts">530</div>
         </div>
-        <div class="bar-fill"></div>
-        <div class="bar-label">
-          <span class="house-name">Treacy</span>
-          <span class="house-pts">530</span>
+        <div class="crest-wrap">
+          <img src="house_t.png" alt="Treacy crest" class="crest-img" />
         </div>
+        <div class="house-name">Treacy</div>
+        <div class="house-rank">3rd</div>
       </div>
 
-      <!-- O'Brien: silver, diagonal blue & white stripes, white lozenges -->
-      <div class="bar-group" data-house="O'Brien" data-points="509" data-color="#adb5bd">
-        <div class="bar-crest">
-          <svg viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <clipPath id="c-obrien">
-                <path d="M5,5 H55 V45 Q30,68 5,45 Z"/>
-              </clipPath>
-            </defs>
-            <g clip-path="url(#c-obrien)">
-              <rect x="0" y="0" width="60" height="75" fill="#dee2e6"/>
-              <polygon points="0,0 60,0 60,18 0,35" fill="#1d3a8a"/>
-              <polygon points="0,28 60,11 60,30 0,47" fill="#1d3a8a"/>
-              <polygon points="0,50 60,33 60,52 0,69" fill="#1d3a8a"/>
-            </g>
-            <!-- lozenges on white stripes -->
-            <ellipse cx="20" cy="22" rx="5" ry="7" fill="none" stroke="white" stroke-width="1.5" clip-path="url(#c-obrien)"/>
-            <ellipse cx="40" cy="42" rx="5" ry="7" fill="none" stroke="white" stroke-width="1.5" clip-path="url(#c-obrien)"/>
-            <path d="M5,5 H55 V45 Q30,68 5,45 Z" fill="none" stroke="#adb5bd" stroke-width="2"/>
-          </svg>
+      <div class="house" data-points="509" data-color="#adb5bd">
+        <div class="bar-track">
+          <div class="bar" style="--color:#adb5bd"></div>
+          <div class="bar-pts">509</div>
         </div>
-        <div class="bar-fill"></div>
-        <div class="bar-label">
-          <span class="house-name">O'Brien</span>
-          <span class="house-pts">509</span>
+        <div class="crest-wrap">
+          <img src="house_o.png" alt="O'Brien crest" class="crest-img" />
         </div>
+        <div class="house-name">O'Brien</div>
+        <div class="house-rank">4th</div>
       </div>
 
-      <!-- Rice: green, red cross quarters, gold diamonds & gold lions -->
-      <div class="bar-group" data-house="Rice" data-points="449" data-color="#2d6a4f">
-        <div class="bar-crest">
-          <svg viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <clipPath id="c-rice">
-                <path d="M5,5 H55 V45 Q30,68 5,45 Z"/>
-              </clipPath>
-            </defs>
-            <g clip-path="url(#c-rice)">
-              <!-- green base -->
-              <rect x="0" y="0" width="60" height="75" fill="#2d6a4f"/>
-              <!-- gold checkered top-left quarter -->
-              <rect x="0" y="0" width="28" height="34" fill="#f4c400"/>
-              <rect x="0"  y="0"  width="9" height="9"  fill="#2d6a4f"/>
-              <rect x="18" y="0"  width="9" height="9"  fill="#2d6a4f"/>
-              <rect x="9"  y="9"  width="9" height="9"  fill="#2d6a4f"/>
-              <rect x="0"  y="18" width="9" height="9"  fill="#2d6a4f"/>
-              <rect x="18" y="18" width="9" height="9"  fill="#2d6a4f"/>
-              <rect x="9"  y="27" width="9" height="7"  fill="#2d6a4f"/>
-              <!-- gold checkered bottom-right quarter -->
-              <rect x="32" y="34" width="28" height="40" fill="#f4c400"/>
-              <rect x="32" y="34" width="9"  height="9"  fill="#2d6a4f"/>
-              <rect x="50" y="34" width="9"  height="9"  fill="#2d6a4f"/>
-              <rect x="41" y="43" width="9"  height="9"  fill="#2d6a4f"/>
-              <rect x="32" y="52" width="9"  height="9"  fill="#2d6a4f"/>
-              <rect x="50" y="52" width="9"  height="9"  fill="#2d6a4f"/>
-              <!-- red cross -->
-              <rect x="26" y="0"  width="8" height="75" fill="#e63946"/>
-              <rect x="0"  y="32" width="60" height="8" fill="#e63946"/>
-              <!-- gold lions top-right and bottom-left -->
-              <text x="44" y="28" text-anchor="middle" font-size="14" fill="#f4c400">🦁</text>
-              <text x="16" y="60" text-anchor="middle" font-size="14" fill="#f4c400">🦁</text>
-            </g>
-            <path d="M5,5 H55 V45 Q30,68 5,45 Z" fill="none" stroke="#c0002a" stroke-width="2"/>
-          </svg>
+      <div class="house" data-points="449" data-color="#2d6a4f">
+        <div class="bar-track">
+          <div class="bar" style="--color:#2d6a4f"></div>
+          <div class="bar-pts">449</div>
         </div>
-        <div class="bar-fill"></div>
-        <div class="bar-label">
-          <span class="house-name">Rice</span>
-          <span class="house-pts">449</span>
+        <div class="crest-wrap">
+          <img src="house_r.png" alt="Rice crest" class="crest-img" />
         </div>
+        <div class="house-name">Rice</div>
+        <div class="house-rank">5th</div>
       </div>
 
-      <!-- Clancy: yellow/gold left, white right, red lion -->
-      <div class="bar-group" data-house="Clancy" data-points="365" data-color="#f4c400">
-        <div class="bar-crest">
-          <svg viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <clipPath id="c-clancy">
-                <path d="M5,5 H55 V45 Q30,68 5,45 Z"/>
-              </clipPath>
-            </defs>
-            <g clip-path="url(#c-clancy)">
-              <rect x="0"  y="0" width="30" height="75" fill="#f4c400"/>
-              <rect x="30" y="0" width="30" height="75" fill="white"/>
-            </g>
-            <!-- red lion on white side -->
-            <text x="44" y="42" text-anchor="middle" font-size="26" fill="#e63946" clip-path="url(#c-clancy)">🦁</text>
-            <path d="M5,5 H55 V45 Q30,68 5,45 Z" fill="none" stroke="#e63946" stroke-width="2"/>
-          </svg>
+      <div class="house" data-points="365" data-color="#f4c400">
+        <div class="bar-track">
+          <div class="bar" style="--color:#f4c400"></div>
+          <div class="bar-pts">365</div>
         </div>
-        <div class="bar-fill"></div>
-        <div class="bar-label">
-          <span class="house-name">Clancy</span>
-          <span class="house-pts">365</span>
+        <div class="crest-wrap">
+          <img src="house_c.png" alt="Clancy crest" class="crest-img" />
         </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- HOUSE CARDS -->
-  <section class="section" id="houses">
-    <h2 class="section-title">The Houses</h2>
-    <div class="cards-wrap">
-
-      <div class="card" style="--c:#e63946">
-        <div class="card-crest">
-          <svg viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
-            <path d="M5,5 H55 V45 Q30,68 5,45 Z" fill="#e63946" stroke="#c0002a" stroke-width="1.5"/>
-            <rect x="5" y="13" width="50" height="5" fill="white"/>
-            <rect x="5" y="22" width="50" height="5" fill="white"/>
-            <rect x="5" y="31" width="50" height="5" fill="white"/>
-            <rect x="5" y="40" width="48" height="5" fill="white"/>
-          </svg>
-        </div>
-        <div class="card-top">Haydon</div>
-        <div class="card-pts">568 pts</div>
-        <div class="card-rank">1st</div>
-      </div>
-
-      <div class="card" style="--c:#48cae4">
-        <div class="card-crest">
-          <svg viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
-            <path d="M5,5 H55 V45 Q30,68 5,45 Z" fill="#48cae4" stroke="#0096c7" stroke-width="1.5"/>
-            <rect x="27" y="5"  width="6" height="62" fill="white"/>
-            <rect x="5"  y="26" width="50" height="6" fill="white"/>
-            <text x="16" y="23" text-anchor="middle" font-size="10" fill="white">✛</text>
-            <text x="44" y="23" text-anchor="middle" font-size="10" fill="white">✛</text>
-            <text x="16" y="42" text-anchor="middle" font-size="10" fill="white">✛</text>
-            <text x="44" y="42" text-anchor="middle" font-size="10" fill="white">✛</text>
-          </svg>
-        </div>
-        <div class="card-top">Mulrooney</div>
-        <div class="card-pts">537 pts</div>
-        <div class="card-rank">2nd</div>
-      </div>
-
-      <div class="card" style="--c:#1d3a8a">
-        <div class="card-crest">
-          <svg viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
-            <defs><clipPath id="c-treacy2"><path d="M5,5 H55 V45 Q30,68 5,45 Z"/></clipPath></defs>
-            <path d="M5,5 H55 V45 Q30,68 5,45 Z" fill="#1d3a8a" stroke="#f4c400" stroke-width="2"/>
-            <g clip-path="url(#c-treacy2)">
-              <rect x="0" y="0" width="60" height="28" fill="#f4c400"/>
-              <rect x="5"  y="0" width="8" height="12" fill="#1d3a8a"/>
-              <rect x="18" y="0" width="8" height="12" fill="#1d3a8a"/>
-              <rect x="31" y="0" width="8" height="12" fill="#1d3a8a"/>
-              <rect x="44" y="0" width="8" height="12" fill="#1d3a8a"/>
-              <rect x="0" y="28" width="60" height="42" fill="#111"/>
-            </g>
-            <text x="30" y="54" text-anchor="middle" font-size="20" fill="white">🕊</text>
-            <path d="M5,5 H55 V45 Q30,68 5,45 Z" fill="none" stroke="#f4c400" stroke-width="2"/>
-          </svg>
-        </div>
-        <div class="card-top">Treacy</div>
-        <div class="card-pts">530 pts</div>
-        <div class="card-rank">3rd</div>
-      </div>
-
-      <div class="card" style="--c:#adb5bd">
-        <div class="card-crest">
-          <svg viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
-            <defs><clipPath id="c-obrien2"><path d="M5,5 H55 V45 Q30,68 5,45 Z"/></clipPath></defs>
-            <g clip-path="url(#c-obrien2)">
-              <rect x="0" y="0" width="60" height="75" fill="#dee2e6"/>
-              <polygon points="0,0 60,0 60,18 0,35" fill="#1d3a8a"/>
-              <polygon points="0,28 60,11 60,30 0,47" fill="#1d3a8a"/>
-              <polygon points="0,50 60,33 60,52 0,69" fill="#1d3a8a"/>
-            </g>
-            <ellipse cx="20" cy="22" rx="5" ry="7" fill="none" stroke="white" stroke-width="1.5" clip-path="url(#c-obrien2)"/>
-            <ellipse cx="40" cy="42" rx="5" ry="7" fill="none" stroke="white" stroke-width="1.5" clip-path="url(#c-obrien2)"/>
-            <path d="M5,5 H55 V45 Q30,68 5,45 Z" fill="none" stroke="#adb5bd" stroke-width="2"/>
-          </svg>
-        </div>
-        <div class="card-top">O'Brien</div>
-        <div class="card-pts">509 pts</div>
-        <div class="card-rank">4th</div>
-      </div>
-
-      <div class="card" style="--c:#2d6a4f">
-        <div class="card-crest">
-          <svg viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
-            <defs><clipPath id="c-rice2"><path d="M5,5 H55 V45 Q30,68 5,45 Z"/></clipPath></defs>
-            <g clip-path="url(#c-rice2)">
-              <rect x="0" y="0" width="60" height="75" fill="#2d6a4f"/>
-              <rect x="0" y="0" width="28" height="34" fill="#f4c400"/>
-              <rect x="0"  y="0"  width="9" height="9"  fill="#2d6a4f"/>
-              <rect x="18" y="0"  width="9" height="9"  fill="#2d6a4f"/>
-              <rect x="9"  y="9"  width="9" height="9"  fill="#2d6a4f"/>
-              <rect x="0"  y="18" width="9" height="9"  fill="#2d6a4f"/>
-              <rect x="18" y="18" width="9" height="9"  fill="#2d6a4f"/>
-              <rect x="32" y="34" width="28" height="40" fill="#f4c400"/>
-              <rect x="32" y="34" width="9"  height="9"  fill="#2d6a4f"/>
-              <rect x="50" y="34" width="9"  height="9"  fill="#2d6a4f"/>
-              <rect x="41" y="43" width="9"  height="9"  fill="#2d6a4f"/>
-              <rect x="32" y="52" width="9"  height="9"  fill="#2d6a4f"/>
-              <rect x="50" y="52" width="9"  height="9"  fill="#2d6a4f"/>
-              <rect x="26" y="0"  width="8" height="75" fill="#e63946"/>
-              <rect x="0"  y="32" width="60" height="8" fill="#e63946"/>
-              <text x="44" y="28" text-anchor="middle" font-size="14" fill="#f4c400">🦁</text>
-              <text x="16" y="60" text-anchor="middle" font-size="14" fill="#f4c400">🦁</text>
-            </g>
-            <path d="M5,5 H55 V45 Q30,68 5,45 Z" fill="none" stroke="#c0002a" stroke-width="2"/>
-          </svg>
-        </div>
-        <div class="card-top">Rice</div>
-        <div class="card-pts">449 pts</div>
-        <div class="card-rank">5th</div>
-      </div>
-
-      <div class="card" style="--c:#f4c400">
-        <div class="card-crest">
-          <svg viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
-            <defs><clipPath id="c-clancy2"><path d="M5,5 H55 V45 Q30,68 5,45 Z"/></clipPath></defs>
-            <g clip-path="url(#c-clancy2)">
-              <rect x="0"  y="0" width="30" height="75" fill="#f4c400"/>
-              <rect x="30" y="0" width="30" height="75" fill="white"/>
-            </g>
-            <text x="44" y="42" text-anchor="middle" font-size="26" fill="#e63946" clip-path="url(#c-clancy2)">🦁</text>
-            <path d="M5,5 H55 V45 Q30,68 5,45 Z" fill="none" stroke="#e63946" stroke-width="2"/>
-          </svg>
-        </div>
-        <div class="card-top">Clancy</div>
-        <div class="card-pts">365 pts</div>
-        <div class="card-rank">6th</div>
+        <div class="house-name">Clancy</div>
+        <div class="house-rank">6th</div>
       </div>
 
     </div>
   </section>
 
   <!-- ABOUT -->
-  <section class="section about">
+  <section class="about">
     <p>The House System promotes a sense of belonging and pride in our students, fostering connection to the St Edmund's College community. Students earn points through sporting events, academic challenges, and pastoral activities.</p>
   </section>
 
