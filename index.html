@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>St Edmund's College — House Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="hero">
+    <div class="hero-inner">
+      <h1 class="hero-title">St Edmund's College</h1>
+      <p class="hero-sub">House Dashboard</p>
+    </div>
+  </header>
+
+  <!-- LEADERBOARD -->
+  <section class="section" id="leaderboard">
+    <h2 class="section-title">House Points</h2>
+    <div class="bars-wrap">
+      <div class="bar-group" data-house="Haydon" data-points="568" data-color="#e63946">
+        <div class="bar-fill"></div>
+        <div class="bar-label">
+          <span class="house-name">Haydon</span>
+          <span class="house-pts">568</span>
+        </div>
+      </div>
+      <div class="bar-group" data-house="Mulrooney" data-points="537" data-color="#48cae4">
+        <div class="bar-fill"></div>
+        <div class="bar-label">
+          <span class="house-name">Mulrooney</span>
+          <span class="house-pts">537</span>
+        </div>
+      </div>
+      <div class="bar-group" data-house="Treacy" data-points="530" data-color="#1d3a8a">
+        <div class="bar-fill"></div>
+        <div class="bar-label">
+          <span class="house-name">Treacy</span>
+          <span class="house-pts">530</span>
+        </div>
+      </div>
+      <div class="bar-group" data-house="O'Brien" data-points="509" data-color="#adb5bd">
+        <div class="bar-fill"></div>
+        <div class="bar-label">
+          <span class="house-name">O'Brien</span>
+          <span class="house-pts">509</span>
+        </div>
+      </div>
+      <div class="bar-group" data-house="Rice" data-points="449" data-color="#2d6a4f">
+        <div class="bar-fill"></div>
+        <div class="bar-label">
+          <span class="house-name">Rice</span>
+          <span class="house-pts">449</span>
+        </div>
+      </div>
+      <div class="bar-group" data-house="Clancy" data-points="365" data-color="#f4c400">
+        <div class="bar-fill"></div>
+        <div class="bar-label">
+          <span class="house-name">Clancy</span>
+          <span class="house-pts">365</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOUSE CARDS -->
+  <section class="section" id="houses">
+    <h2 class="section-title">The Houses</h2>
+    <div class="cards-wrap">
+      <div class="card" style="--c:#e63946">
+        <div class="card-top">Haydon</div>
+        <div class="card-pts">568 pts</div>
+        <div class="card-rank">1st</div>
+      </div>
+      <div class="card" style="--c:#48cae4">
+        <div class="card-top">Mulrooney</div>
+        <div class="card-pts">537 pts</div>
+        <div class="card-rank">2nd</div>
+      </div>
+      <div class="card" style="--c:#1d3a8a">
+        <div class="card-top">Treacy</div>
+        <div class="card-pts">530 pts</div>
+        <div class="card-rank">3rd</div>
+      </div>
+      <div class="card" style="--c:#adb5bd">
+        <div class="card-top">O'Brien</div>
+        <div class="card-pts">509 pts</div>
+        <div class="card-rank">4th</div>
+      </div>
+      <div class="card" style="--c:#2d6a4f">
+        <div class="card-top">Rice</div>
+        <div class="card-pts">449 pts</div>
+        <div class="card-rank">5th</div>
+      </div>
+      <div class="card" style="--c:#f4c400">
+        <div class="card-top">Clancy</div>
+        <div class="card-pts">365 pts</div>
+        <div class="card-rank">6th</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STUDY TIPS -->
+  <section class="section" id="tips">
+    <h2 class="section-title">Weekly Study Tips</h2>
+    <div class="tips-carousel">
+      <div class="tip active">
+        <span class="tip-num">01</span>
+        <p>Break your study into 25-minute blocks with 5-minute breaks (Pomodoro). Your brain retains more when it gets regular rests.</p>
+      </div>
+      <div class="tip">
+        <span class="tip-num">02</span>
+        <p>Write summaries in your own words after each topic. If you can explain it simply, you actually understand it.</p>
+      </div>
+      <div class="tip">
+        <span class="tip-num">03</span>
+        <p>Test yourself with flashcards or past papers — retrieval practice beats re-reading every time.</p>
+      </div>
+      <div class="tip">
+        <span class="tip-num">04</span>
+        <p>Study the hardest subject first when your energy is highest, usually in the morning.</p>
+      </div>
+      <div class="tip">
+        <span class="tip-num">05</span>
+        <p>Put your phone in another room. Even having it face-down nearby reduces your ability to focus.</p>
+      </div>
+    </div>
+    <div class="tip-dots">
+      <button class="dot active" data-i="0"></button>
+      <button class="dot" data-i="1"></button>
+      <button class="dot" data-i="2"></button>
+      <button class="dot" data-i="3"></button>
+      <button class="dot" data-i="4"></button>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section about">
+    <p>The House System promotes a sense of belonging and pride in our students, fostering connection to the St Edmund's College community. Students earn points through sporting events, academic challenges, and pastoral activities.</p>
+  </section>
+
+  <footer>
+    <p>St Edmund's College &mdash; House Dashboard &copy; 2026</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
