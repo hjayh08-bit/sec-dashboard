@@ -1,4 +1,4 @@
-const CACHE = 'eddies-grit-hub-v5';
+const CACHE = 'eddies-grit-hub-v6';
 const ASSETS = [
   '/',
   '/index.html',

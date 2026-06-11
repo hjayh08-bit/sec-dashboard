@@ -331,6 +331,7 @@ const WIN_MSGS = ['Genius! 🏆', 'Magnificent! 🔥', 'Impressive! 💪', 'Sple
 const wBoard = document.getElementById('wordle-board');
 const wKeyboard = document.getElementById('wordle-keyboard');
 const wMsg = document.getElementById('wordle-msg');
+const wRetry = document.getElementById('wordle-retry');
 
 let wWord = '';
 let wGuesses = [];
@@ -391,6 +392,12 @@ function wHandleKey(k) {
     return;
   }
   if (/^[A-Z]$/.test(k) && wCurrent.length < 5) {
+    // Letters already proven absent are locked out
+    const keyEl = keyEls[k];
+    if (keyEl && keyEl.dataset.state === 'absent') {
+      wShowMsg(`${k} isn't in the word`);
+      return;
+    }
     const t = wTiles(wRow)[wCurrent.length];
     t.textContent = k;
     t.classList.add('filled');
@@ -453,7 +460,24 @@ function wFinish(won) {
   wSave();
   if (won) wShowMsg(WIN_MSGS[wGuesses.length - 1], true);
   else wShowMsg(`The word was ${wWord} — better luck next time!`, true);
+  wRetry.classList.add('visible');
 }
+
+function wReset() {
+  wGuesses = [];
+  wRow = 0;
+  wCurrent = '';
+  wDone = false;
+  localStorage.removeItem('grit_wordle');
+  wBuildBoard();
+  Object.values(keyEls).forEach(el => {
+    delete el.dataset.state;
+    el.classList.remove('absent', 'present', 'correct');
+  });
+  wMsg.textContent = '';
+  wRetry.classList.remove('visible');
+}
+wRetry.addEventListener('click', wReset);
 
 function wSubmit() {
   if (wCurrent.length < 5) {
@@ -490,6 +514,7 @@ function wRestore() {
   if (wDone) {
     const won = wGuesses[wGuesses.length - 1] === wWord;
     wShowMsg(won ? WIN_MSGS[wGuesses.length - 1] : `The word was ${wWord} — better luck next time!`, true);
+    wRetry.classList.add('visible');
   }
 }
 

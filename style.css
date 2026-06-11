@@ -756,7 +756,25 @@ footer {
 .kb-key.wide { max-width: 70px; flex: 1.6; font-size: .7rem; }
 .kb-key.correct { background: #1f7a45; border-color: transparent; }
 .kb-key.present { background: #d4a800; color: #000; border-color: transparent; }
-.kb-key.absent { background: rgba(255,255,255,.02); color: rgba(255,255,255,.3); }
+.kb-key.absent { background: rgba(255,255,255,.02); color: rgba(255,255,255,.3); cursor: not-allowed; }
+.wordle-retry {
+  display: none;
+  margin: 20px auto 0;
+  padding: 13px 34px;
+  background: var(--accent);
+  color: #000;
+  border: none;
+  border-radius: 100px;
+  font-family: inherit;
+  font-size: .98rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(244,196,0,.3);
+  transition: transform .3s var(--spring), box-shadow .3s var(--ease);
+}
+.wordle-retry.visible { display: inline-block; animation: heroRise .5s var(--ease) both; }
+.wordle-retry:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 12px 32px rgba(244,196,0,.45); }
+.wordle-retry:active { transform: scale(.95); }
 
 @keyframes tilePop {
   from { transform: scale(.8); }
