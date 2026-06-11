@@ -26,6 +26,7 @@
     <div class="nav-links">
       <a href="#vote">Vote</a>
       <a href="#tips">Tips</a>
+      <a href="#wordle">Wordle</a>
       <a href="#leaderboard">Houses</a>
       <a href="#feedback">Feedback</a>
     </div>
@@ -45,20 +46,15 @@
       </div>
       <p class="hero-sub">St Edmund's College — Student Info Board</p>
       <a href="#vote" class="hero-cta">Have your say ↓</a>
+      <div class="hero-welcome glass">
+        <p>Built by students, for students — Eddies Grit Hub is your space to stay connected, get involved, and help shape life at St Edmund's. Vote on real issues around the college, track live house points, and pick up weekly study tips. This is just the start — the more students use it, the more it grows. The goal is simple: build something that actually means something to the boys at Eddies.</p>
+      </div>
     </div>
   </header>
 
-  <!-- WELCOME -->
-  <section class="welcome">
-    <div class="welcome-inner reveal">
-      <h2>Welcome to Eddies Grit Hub</h2>
-      <p>Built by students, for students — Eddies Grit Hub is your space to stay connected, get involved, and help shape life at St Edmund's. Vote on real issues around the college, track live house points, and pick up weekly study tips. This is just the start — the more students use it, the more it grows. The goal is simple: build something that actually means something to the boys at Eddies.</p>
-    </div>
-  </section>
-
   <!-- POLL -->
   <section class="poll-section" id="vote">
-    <div class="poll-inner reveal">
+    <div class="poll-inner glass reveal">
       <div class="poll-tag">Student Vote</div>
       <h2 class="poll-question">Should there be permanent ping pong tables in the quad?</h2>
       <div class="poll-buttons" id="poll-buttons">
@@ -95,7 +91,7 @@
   <section class="tips-banner" id="tips">
     <div class="tips-inner reveal">
       <div class="tips-label">Weekly Study Tip</div>
-      <div class="tips-carousel">
+      <div class="tips-carousel glass">
         <div class="tip active">
           <span class="tip-num">01</span>
           <p>Break your study into 25-minute blocks with 5-minute breaks (Pomodoro). Your brain retains more when it gets regular rests.</p>
@@ -124,6 +120,18 @@
         <button class="dot" data-i="3"></button>
         <button class="dot" data-i="4"></button>
       </div>
+    </div>
+  </section>
+
+  <!-- WORDLE -->
+  <section class="wordle-section" id="wordle">
+    <div class="wordle-inner reveal">
+      <div class="poll-tag">Daily Challenge</div>
+      <h2 class="wordle-title">Eddies Wordle</h2>
+      <p class="wordle-sub">Guess the 5-letter word in six tries. The student team changes the word — check back often.</p>
+      <div class="wordle-board" id="wordle-board"></div>
+      <p class="wordle-msg" id="wordle-msg"></p>
+      <div class="wordle-keyboard" id="wordle-keyboard"></div>
     </div>
   </section>
 
@@ -214,13 +222,14 @@
 
   <!-- FEEDBACK -->
   <section class="feedback-section" id="feedback">
-    <div class="feedback-inner reveal">
+    <div class="feedback-inner glass reveal">
       <div class="poll-tag">Got an idea?</div>
       <h2 class="feedback-title">Send us your feedback</h2>
       <p class="feedback-sub">Spotted something, got a suggestion, or want a new poll? Drop us a message — it goes straight to the student team.</p>
 
       <form class="feedback-form" id="feedback-form">
         <input type="text" name="name" placeholder="Your name" required />
+        <input type="email" name="email" placeholder="Your school email" required />
         <textarea name="message" placeholder="Your message…" rows="4" required></textarea>
         <input type="hidden" name="_subject" value="New Eddies Grit Hub feedback" />
         <button type="submit" class="feedback-btn magnetic">Send feedback →</button>

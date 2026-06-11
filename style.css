@@ -26,6 +26,21 @@ body {
   overflow-x: hidden;
 }
 
+/* Ambient glow behind the whole page — gives the glass something to refract */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(600px 420px at 85% 15%, rgba(26,58,138,.28), transparent 70%),
+    radial-gradient(700px 520px at 8% 65%, rgba(244,196,0,.07), transparent 70%),
+    radial-gradient(520px 420px at 70% 95%, rgba(26,58,138,.2), transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+#vote, #tips, #wordle, #leaderboard, #feedback { scroll-margin-top: 64px; }
+
 /* ============ NAV ============ */
 .nav {
   position: fixed;
@@ -80,8 +95,8 @@ body {
 @media (max-width: 600px) {
   .nav { justify-content: center; }
   .nav-brand { display: none; }
-  .nav-links { gap: 20px; }
-  .nav-links a { font-size: .92rem; }
+  .nav-links { gap: 14px; }
+  .nav-links a { font-size: .86rem; }
 }
 
 /* ============ HERO ============ */
@@ -95,7 +110,6 @@ body {
   padding: 120px 24px 80px;
   overflow: hidden;
   background: radial-gradient(ellipse at 50% 0%, #14224a 0%, #0b0e1a 60%);
-  border-bottom: 1px solid rgba(244,196,0,.15);
 }
 .hero-bg {
   position: absolute;
@@ -203,38 +217,67 @@ body {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ============ SCROLL REVEAL ============ */
+/* ============ SCROLL REVEAL — liquid blur-in ============ */
 .reveal {
   opacity: 0;
   transform: translateY(44px);
-  transition: opacity .9s var(--ease), transform .9s var(--ease);
-  will-change: opacity, transform;
+  filter: blur(10px);
+  transition: opacity .9s var(--ease), transform .9s var(--ease), filter .9s var(--ease);
+  will-change: opacity, transform, filter;
 }
 .reveal.in {
   opacity: 1;
   transform: translateY(0);
+  filter: blur(0);
 }
 
-/* ============ WELCOME ============ */
-.welcome {
-  background: linear-gradient(135deg, #14264f 0%, #0e1a38 100%);
-  border-bottom: 1px solid rgba(255,255,255,.06);
-  padding: 88px 24px;
+/* ============ LIQUID GLASS ============ */
+.glass {
+  position: relative;
+  background: linear-gradient(150deg, rgba(255,255,255,.09) 0%, rgba(255,255,255,.03) 60%, rgba(255,255,255,.06) 100%);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: var(--radius);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.22),
+    inset 0 -1px 0 rgba(255,255,255,.05),
+    0 24px 60px rgba(0,0,0,.35);
+  overflow: hidden;
 }
-.welcome-inner { max-width: var(--max); margin: 0 auto; }
-.welcome h2 {
-  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
-  font-weight: 800;
-  letter-spacing: -.02em;
-  margin-bottom: 20px;
-  color: var(--accent);
+.glass::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 55%; height: 100%;
+  background: linear-gradient(105deg,
+    transparent 0%,
+    rgba(255,255,255,.07) 40%,
+    rgba(255,255,255,.14) 50%,
+    rgba(255,255,255,.07) 60%,
+    transparent 100%);
+  transform: translateX(-220%) skewX(-18deg);
+  pointer-events: none;
 }
-.welcome p {
-  font-size: clamp(1.05rem, 2vw, 1.3rem);
-  color: rgba(255,255,255,.92);
-  line-height: 1.85;
-  max-width: 820px;
-  font-weight: 400;
+.glass.in::before,
+.reveal.in .glass::before { animation: sheenSweep 1.5s var(--ease) .45s both; }
+@keyframes sheenSweep {
+  from { transform: translateX(-220%) skewX(-18deg); }
+  to   { transform: translateX(420%) skewX(-18deg); }
+}
+
+/* ============ HERO WELCOME BUBBLE ============ */
+.hero-welcome {
+  max-width: 700px;
+  margin: 46px auto 0;
+  padding: 26px 30px;
+  animation: heroRise 1s var(--ease) .55s both;
+}
+.hero-welcome::before { animation: sheenSweep 1.6s var(--ease) 1.3s both; }
+.hero-welcome p {
+  font-size: 1.04rem;
+  line-height: 1.8;
+  color: rgba(255,255,255,.88);
 }
 
 /* ============ GLASS CARD SHARED ============ */
@@ -242,11 +285,11 @@ body {
   max-width: 720px;
   margin: 0 auto;
 }
+.poll-inner, .feedback-inner { padding: 40px 38px; }
 
 /* ============ POLL ============ */
 .poll-section {
-  background: var(--bg);
-  padding: 96px 24px;
+  padding: 72px 24px;
 }
 .poll-tag {
   display: inline-block;
@@ -334,8 +377,7 @@ body {
 
 /* ============ STUDY TIPS ============ */
 .tips-banner {
-  background: linear-gradient(135deg, #0e1a38 0%, #14264f 100%);
-  padding: 96px 24px;
+  padding: 72px 24px;
 }
 .tips-label {
   font-size: clamp(1.4rem, 3vw, 1.9rem);
@@ -355,14 +397,8 @@ body {
   border-radius: 2px;
 }
 .tips-carousel {
-  background: rgba(255,255,255,.05);
-  border: 1px solid rgba(244,196,0,.18);
-  border-radius: var(--radius);
   padding: 40px 44px;
   min-height: 120px;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 20px 60px rgba(0,0,0,.3);
   touch-action: pan-y;
   user-select: none;
   cursor: grab;
@@ -401,7 +437,7 @@ body {
 .dot.active { background: var(--accent); transform: scale(1.35); }
 
 /* ============ SECTION / LEADERBOARD ============ */
-.section { max-width: var(--max); margin: 0 auto; padding: 96px 24px; }
+.section { max-width: var(--max); margin: 0 auto; padding: 72px 24px; }
 .section-title {
   font-size: clamp(1.6rem, 4vw, 2.4rem);
   font-weight: 800;
@@ -492,17 +528,14 @@ body {
 
 /* ============ ABOUT ============ */
 .about {
-  background: linear-gradient(135deg, #14264f 0%, #0e1a38 100%);
-  padding: 72px 24px;
+  padding: 56px 24px;
   text-align: center;
-  border-top: 1px solid rgba(255,255,255,.06);
 }
 .about p { max-width: var(--max); margin: 0 auto; color: rgba(255,255,255,.7); font-size: 1.05rem; line-height: 1.8; }
 
 /* ============ FEEDBACK ============ */
 .feedback-section {
-  background: var(--bg);
-  padding: 96px 24px 110px;
+  padding: 72px 24px 100px;
 }
 .feedback-title {
   font-size: clamp(1.6rem, 3.5vw, 2.3rem);
@@ -580,14 +613,132 @@ footer {
   border-top: 2px solid var(--accent);
 }
 
+/* ============ WORDLE ============ */
+.wordle-section { padding: 72px 24px; }
+.wordle-inner { max-width: 600px; margin: 0 auto; text-align: center; }
+.wordle-title {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -.02em;
+  color: #fff;
+  margin-bottom: 10px;
+}
+.wordle-sub { color: var(--muted); font-size: .98rem; margin-bottom: 30px; }
+.wordle-board {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: min(340px, 88vw);
+  margin: 0 auto 18px;
+}
+.wordle-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+.wordle-row.shake { animation: rowShake .5s ease; }
+.wordle-tile {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
+  font-weight: 900;
+  color: #fff;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.16);
+  user-select: none;
+}
+.wordle-tile.filled {
+  border-color: rgba(255,255,255,.45);
+  animation: tilePop .14s ease;
+}
+.wordle-tile.flip { animation: tileFlip .55s var(--ease); }
+.wordle-tile.correct {
+  background: linear-gradient(150deg, #34b06a, #1f7a45);
+  border-color: transparent;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 6px 18px rgba(31,122,69,.35);
+}
+.wordle-tile.present {
+  background: linear-gradient(150deg, #ffd83d, #d4a800);
+  color: #000;
+  border-color: transparent;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 6px 18px rgba(212,168,0,.3);
+}
+.wordle-tile.absent {
+  background: rgba(255,255,255,.03);
+  color: rgba(255,255,255,.4);
+  border-color: rgba(255,255,255,.05);
+}
+.wordle-msg {
+  min-height: 1.6em;
+  font-weight: 800;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+.wordle-keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.kb-row { display: flex; gap: 6px; justify-content: center; }
+.kb-key {
+  flex: 1;
+  max-width: 43px;
+  height: 56px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 10px;
+  background: rgba(255,255,255,.07);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
+  color: #fff;
+  font-family: inherit;
+  font-size: .95rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform .12s var(--spring), background .25s ease, opacity .25s ease;
+  padding: 0;
+}
+.kb-key:active { transform: scale(.9); }
+.kb-key.wide { max-width: 70px; flex: 1.6; font-size: .7rem; }
+.kb-key.correct { background: #1f7a45; border-color: transparent; }
+.kb-key.present { background: #d4a800; color: #000; border-color: transparent; }
+.kb-key.absent { background: rgba(255,255,255,.02); color: rgba(255,255,255,.3); }
+
+@keyframes tilePop {
+  from { transform: scale(.8); }
+  to   { transform: scale(1); }
+}
+@keyframes tileFlip {
+  0%   { transform: rotateX(0); }
+  50%  { transform: rotateX(90deg); }
+  100% { transform: rotateX(0); }
+}
+@keyframes rowShake {
+  10%, 90% { transform: translateX(-2px); }
+  20%, 80% { transform: translateX(4px); }
+  30%, 50%, 70% { transform: translateX(-6px); }
+  40%, 60% { transform: translateX(6px); }
+}
+
 /* ============ MOBILE ============ */
 @media (max-width: 600px) {
-  .welcome, .poll-section, .tips-banner, .section,
-  .feedback-section, .about { padding-left: 18px; padding-right: 18px; }
-  .welcome { padding-top: 60px; padding-bottom: 60px; }
-  .poll-section, .tips-banner, .section, .feedback-section { padding-top: 64px; padding-bottom: 64px; }
+  .poll-section, .tips-banner, .section,
+  .feedback-section, .about, .wordle-section { padding-left: 18px; padding-right: 18px; }
+  .poll-section, .tips-banner, .section,
+  .feedback-section, .wordle-section { padding-top: 52px; padding-bottom: 52px; }
   .hero-logo-wrap { flex-direction: column; gap: 20px; }
   .hero-logo { height: 108px; }
+  .hero-welcome { margin-top: 36px; padding: 22px 20px; }
+  .hero-welcome p { font-size: .95rem; }
+  .poll-inner, .feedback-inner { padding: 28px 20px; }
   .poll-buttons { flex-direction: column; gap: 12px; }
   .poll-btn { width: 100%; padding: 22px 24px; }
   .tips-carousel { padding: 28px 22px; }
@@ -599,6 +750,9 @@ footer {
   .crest-wrap { width: 92px; }
   .house-name { font-size: .78rem; }
   .section-title { margin-bottom: 40px; }
+  .wordle-tile { font-size: 1.45rem; border-radius: 10px; }
+  .kb-key { height: 50px; font-size: .88rem; border-radius: 8px; }
+  .kb-row { gap: 5px; }
 }
 
 /* ============ KEYFRAMES ============ */

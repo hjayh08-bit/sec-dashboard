@@ -257,8 +257,19 @@ if (localStorage.getItem('poll_pingpong_voted')) {
   getVotes().then(showResults);
 }
 
-/* ============ FEEDBACK FORM (FormSubmit) ============ */
+/* ============ DEVICE ID — lets feedback be traced per device ============ */
+function deviceId() {
+  let id = localStorage.getItem('grit_device_id');
+  if (!id) {
+    id = (crypto.randomUUID ? crypto.randomUUID() : Date.now() + '-' + Math.random().toString(36).slice(2, 10));
+    localStorage.setItem('grit_device_id', id);
+  }
+  return id;
+}
+
+/* ============ FEEDBACK FORM (FormSubmit + Firebase audit log) ============ */
 const FEEDBACK_ENDPOINT = 'https://formsubmit.co/ajax/cde44a1827c97c277a4bb0f0875f80bc';
+const FEEDBACK_LOG = 'https://eddies-grit-hub-default-rtdb.firebaseio.com/feedbackLog.json';
 const feedbackForm = document.getElementById('feedback-form');
 const feedbackStatus = document.getElementById('feedback-status');
 
@@ -270,13 +281,29 @@ feedbackForm.addEventListener('submit', async (e) => {
   feedbackStatus.className = 'feedback-status';
   feedbackStatus.textContent = '';
 
+  // Audit copy → Firebase (write-only log, readable only in your console)
+  fetch(FEEDBACK_LOG, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name: feedbackForm.name.value,
+      email: feedbackForm.email.value,
+      message: feedbackForm.message.value,
+      device: deviceId(),
+      time: new Date().toISOString()
+    })
+  }).catch(() => {});
+
   try {
     const res = await fetch(FEEDBACK_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({
         name: feedbackForm.name.value,
+        email: feedbackForm.email.value,
         message: feedbackForm.message.value,
+        device: deviceId(),
+        _replyto: feedbackForm.email.value,
         _subject: 'New Eddies Grit Hub feedback'
       })
     });
@@ -295,3 +322,198 @@ feedbackForm.addEventListener('submit', async (e) => {
     btn.textContent = 'Send feedback →';
   }
 });
+
+/* ============ EDDIES WORDLE — word lives in Firebase ============ */
+const WORDLE_DB = 'https://eddies-grit-hub-default-rtdb.firebaseio.com/wordle.json';
+const WORDLE_FALLBACK = 'EDDIE';
+const WIN_MSGS = ['Genius! 🏆', 'Magnificent! 🔥', 'Impressive! 💪', 'Splendid! 👏', 'Great! 🙌', 'Phew! 😅'];
+
+const wBoard = document.getElementById('wordle-board');
+const wKeyboard = document.getElementById('wordle-keyboard');
+const wMsg = document.getElementById('wordle-msg');
+
+let wWord = '';
+let wGuesses = [];
+let wRow = 0;
+let wCurrent = '';
+let wDone = false;
+const keyEls = {};
+
+const KB_LAYOUT = [
+  ['Q','W','E','R','T','Y','U','I','O','P'],
+  ['A','S','D','F','G','H','J','K','L'],
+  ['ENTER','Z','X','C','V','B','N','M','⌫']
+];
+
+function wBuildBoard() {
+  wBoard.innerHTML = '';
+  for (let r = 0; r < 6; r++) {
+    const row = document.createElement('div');
+    row.className = 'wordle-row';
+    for (let c = 0; c < 5; c++) {
+      const t = document.createElement('div');
+      t.className = 'wordle-tile';
+      row.appendChild(t);
+    }
+    wBoard.appendChild(row);
+  }
+}
+
+function wBuildKeyboard() {
+  wKeyboard.innerHTML = '';
+  KB_LAYOUT.forEach(rowKeys => {
+    const row = document.createElement('div');
+    row.className = 'kb-row';
+    rowKeys.forEach(k => {
+      const btn = document.createElement('button');
+      btn.className = 'kb-key' + (k.length > 1 ? ' wide' : '');
+      btn.textContent = k;
+      btn.addEventListener('click', () => { wHandleKey(k); btn.blur(); });
+      keyEls[k] = btn;
+      row.appendChild(btn);
+    });
+    wKeyboard.appendChild(row);
+  });
+}
+
+function wTiles(r) { return wBoard.children[r].children; }
+
+function wHandleKey(k) {
+  if (wDone || !wWord) return;
+  if (k === 'ENTER') return wSubmit();
+  if (k === '⌫') {
+    if (wCurrent.length) {
+      wCurrent = wCurrent.slice(0, -1);
+      const t = wTiles(wRow)[wCurrent.length];
+      t.textContent = '';
+      t.classList.remove('filled');
+    }
+    return;
+  }
+  if (/^[A-Z]$/.test(k) && wCurrent.length < 5) {
+    const t = wTiles(wRow)[wCurrent.length];
+    t.textContent = k;
+    t.classList.add('filled');
+    wCurrent += k;
+  }
+}
+
+function wEvaluate(guess) {
+  const states = Array(5).fill('absent');
+  const remaining = {};
+  for (let i = 0; i < 5; i++) {
+    if (guess[i] === wWord[i]) states[i] = 'correct';
+    else remaining[wWord[i]] = (remaining[wWord[i]] || 0) + 1;
+  }
+  for (let i = 0; i < 5; i++) {
+    if (states[i] === 'correct') continue;
+    if (remaining[guess[i]] > 0) { states[i] = 'present'; remaining[guess[i]]--; }
+  }
+  return states;
+}
+
+function wColorKey(letter, state) {
+  const el = keyEls[letter];
+  if (!el) return;
+  const rank = { absent: 1, present: 2, correct: 3 };
+  if (el.dataset.state && rank[el.dataset.state] >= rank[state]) return;
+  el.dataset.state = state;
+  el.classList.remove('absent', 'present', 'correct');
+  el.classList.add(state);
+}
+
+function wShowMsg(text, sticky) {
+  wMsg.textContent = text;
+  if (!sticky) setTimeout(() => { if (wMsg.textContent === text) wMsg.textContent = ''; }, 2200);
+}
+
+function wRevealRow(r, guess, states, instant, onDone) {
+  const tiles = wTiles(r);
+  const step = (instant || prefersReduced) ? 0 : 280;
+  for (let i = 0; i < 5; i++) {
+    const t = tiles[i];
+    setTimeout(() => {
+      if (step) t.classList.add('flip');
+      setTimeout(() => {
+        t.textContent = guess[i];
+        t.classList.add(states[i]);
+        wColorKey(guess[i], states[i]);
+        if (i === 4 && onDone) setTimeout(onDone, step ? 300 : 0);
+      }, step ? 275 : 0);
+    }, i * step);
+  }
+}
+
+function wSave() {
+  localStorage.setItem('grit_wordle', JSON.stringify({ word: wWord, guesses: wGuesses, done: wDone }));
+}
+
+function wFinish(won) {
+  wDone = true;
+  wSave();
+  if (won) wShowMsg(WIN_MSGS[wGuesses.length - 1], true);
+  else wShowMsg(`The word was ${wWord} — better luck next time!`, true);
+}
+
+function wSubmit() {
+  if (wCurrent.length < 5) {
+    const rowEl = wBoard.children[wRow];
+    rowEl.classList.add('shake');
+    setTimeout(() => rowEl.classList.remove('shake'), 520);
+    wShowMsg('Not enough letters');
+    return;
+  }
+  const guess = wCurrent;
+  const states = wEvaluate(guess);
+  wGuesses.push(guess);
+  wCurrent = '';
+  const r = wRow;
+  wRow++;
+  wSave();
+  wRevealRow(r, guess, states, false, () => {
+    if (guess === wWord) wFinish(true);
+    else if (wGuesses.length >= 6) wFinish(false);
+  });
+}
+
+function wRestore() {
+  let saved = null;
+  try { saved = JSON.parse(localStorage.getItem('grit_wordle')); } catch (e) {}
+  if (!saved || saved.word !== wWord) {
+    localStorage.removeItem('grit_wordle');
+    return;
+  }
+  wGuesses = saved.guesses || [];
+  wDone = !!saved.done;
+  wGuesses.forEach((g, r) => wRevealRow(r, g, wEvaluate(g), true));
+  wRow = wGuesses.length;
+  if (wDone) {
+    const won = wGuesses[wGuesses.length - 1] === wWord;
+    wShowMsg(won ? WIN_MSGS[wGuesses.length - 1] : `The word was ${wWord} — better luck next time!`, true);
+  }
+}
+
+document.addEventListener('keydown', e => {
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  if (e.target.closest('input, textarea')) return;
+  if (e.key === 'Enter' && e.target.closest('button')) return;
+  if (e.key === 'Enter') wHandleKey('ENTER');
+  else if (e.key === 'Backspace') wHandleKey('⌫');
+  else if (/^[a-zA-Z]$/.test(e.key)) wHandleKey(e.key.toUpperCase());
+});
+
+(async function initWordle() {
+  if (!wBoard) return;
+  wBuildBoard();
+  wBuildKeyboard();
+  try {
+    const res = await fetch(WORDLE_DB);
+    const data = await res.json();
+    let w = typeof data === 'string' ? data : (data && data.word);
+    w = String(w || '').trim().toUpperCase();
+    wWord = /^[A-Z]{5}$/.test(w) ? w : WORDLE_FALLBACK;
+  } catch (e) {
+    wWord = WORDLE_FALLBACK;
+  }
+  wRestore();
+})();
